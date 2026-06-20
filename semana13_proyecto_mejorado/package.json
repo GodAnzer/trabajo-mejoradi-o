@@ -1,0 +1,11 @@
+{
+  "name": "semana13-taller-formularios-ux",
+  "version": "1.0.0",
+  "description": "Taller practico de validacion de formularios, integridad de datos y UX.",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": ["html", "css", "javascript", "validacion", "ux", "formularios"],
+  "author": "Actividad academica",
+  "license": "MIT"
+}

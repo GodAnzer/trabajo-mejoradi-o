@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!--
+    BLOQUE 1: Configuración inicial del documento.
+    - lang="es" indica que el contenido está en español.
+    - UTF-8 permite mostrar tildes y caracteres especiales.
+    - viewport hace que la página pueda adaptarse a celulares y computadores.
+  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Taller práctico de validación de formularios, integridad de datos y experiencia de usuario UX." />
+  <title>Semana 13 | Taller práctico de formularios UX</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <!--
+    BLOQUE 2: Enlace de accesibilidad.
+    Permite saltar directamente al contenido principal usando teclado.
+  -->
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <!--
+    BLOQUE 3: Encabezado del proyecto.
+    Presenta el propósito de la actividad y contextualiza el problema.
+  -->
+  <header class="hero">
+    <nav class="topbar" aria-label="Navegación principal">
+      <strong>Semana 13</strong>
+      <a href="docs/00_GUIA_AUTONOMA_ESTUDIANTE.md">Guía</a>
+      <a href="evidencias/MATRIZ_PRUEBAS.md">Matriz de pruebas</a>
+      <a href="evidencias/INFORME_ENTREGA.md">Entrega</a>
+    </nav>
+
+    <div class="hero__grid">
+      <section class="hero__content">
+        <p class="eyebrow">Unidad 2 · Validación, corrección y presentación</p>
+        <h1>Registro inteligente de talleres comunitarios</h1>
+        <p class="hero__lead">
+          Practica cómo un formulario web puede validar datos, proteger la integridad de la información
+          y mejorar la experiencia de usuario mediante mensajes claros, pruebas y ajustes de código.
+        </p>
+        <div class="hero__actions" aria-label="Acciones iniciales">
+          <a class="button button--primary" href="#formulario-registro">Comenzar práctica</a>
+          <a class="button button--secondary" href="#zona-pruebas">Ver zona de pruebas</a>
+        </div>
+      </section>
+
+      <aside class="hero__card" aria-label="Objetivos de aprendizaje">
+        <h2>Al finalizar podrás</h2>
+        <ul class="check-list">
+          <li>Ejecutar y adaptar código HTML, CSS y JavaScript.</li>
+          <li>Crear y comprobar reglas de validación.</li>
+          <li>Detectar datos inválidos o duplicados.</li>
+          <li>Probar el sistema con evidencias.</li>
+          <li>Explicar tus cambios técnicamente.</li>
+        </ul>
+      </aside>
+    </div>
+  </header>
+
+  <main id="contenido-principal">
+    <!--
+      BLOQUE 4: Sección conceptual breve.
+      Antes de modificar código, se recuerdan los conceptos clave de la actividad.
+    -->
+    <section class="section section--concepts" aria-labelledby="titulo-conceptos">
+      <div class="section__header">
+        <p class="section-kicker">Antes de programar</p>
+        <h2 id="titulo-conceptos">Tres conceptos que guían el proyecto</h2>
+        <p>
+          Este sistema no se evalúa solo por verse bonito. Se evalúa por validar, proteger datos
+          y orientar al usuario cuando se equivoca.
+        </p>
+      </div>
+
+      <div class="concept-grid">
+        <article class="concept-card">
+          <span class="concept-card__number">01</span>
+          <h3>Validación</h3>
+          <p>Comprueba si un dato cumple reglas: obligatorio, formato, rango, longitud o selección.</p>
+        </article>
+        <article class="concept-card">
+          <span class="concept-card__number">02</span>
+          <h3>Integridad de datos</h3>
+          <p>Evita información incompleta, repetida, incoherente o imposible de utilizar.</p>
+        </article>
+        <article class="concept-card">
+          <span class="concept-card__number">03</span>
+          <h3>UX</h3>
+          <p>Facilita que el usuario entienda qué debe escribir, qué falló y cómo corregirlo.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="app-shell" aria-label="Aplicación principal">
+      <div class="form-column">
+        <!--
+          BLOQUE 5: Formulario principal.
+          novalidate desactiva los mensajes nativos del navegador para que JavaScript muestre
+          mensajes personalizados y más claros para esta práctica.
+        -->
+        <section class="panel" aria-labelledby="titulo-formulario">
+          <div class="panel__heading">
+            <div>
+              <p class="section-kicker">Taller práctico</p>
+              <h2 id="titulo-formulario">Formulario de inscripción</h2>
+            </div>
+
+            <!--
+              BLOQUE 6: Progreso del formulario.
+              Ayuda a la UX porque el usuario sabe cuánto ha completado.
+            -->
+            <div class="progress-card" aria-label="Progreso del formulario">
+              <span id="progressLabel">0%</span>
+              <div class="progress-bar" aria-hidden="true"><span id="progressBar"></span></div>
+            </div>
+          </div>
+
+          <form id="registrationForm" class="form" novalidate>
+            <!--
+              BLOQUE 7: Datos personales.
+              fieldset y legend hacen el formulario más semántico y accesible.
+            -->
+            <fieldset class="fieldset">
+              <legend>Datos personales</legend>
+
+              <div class="form-grid">
+                <div class="field" data-field-wrapper="fullName">
+                  <label for="fullName">Nombre completo <span aria-hidden="true">*</span></label>
+                  <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Ejemplo: Ana María Pérez" aria-describedby="help-fullName error-fullName" />
+                  <p class="field-help" id="help-fullName">Debe incluir mínimo nombre y apellido. No uses números.</p>
+                  <p class="field-error" id="error-fullName" aria-live="polite"></p>
+                </div>
+
+                <div class="field" data-field-wrapper="documentId">
+                  <label for="documentId">Documento <span aria-hidden="true">*</span></label>
+                  <input id="documentId" name="documentId" type="text" inputmode="numeric" placeholder="Solo números" aria-describedby="help-documentId error-documentId" />
+                  <p class="field-help" id="help-documentId">Debe tener entre 6 y 12 dígitos. Se usa para evitar duplicados.</p>
+                  <p class="field-error" id="error-documentId" aria-live="polite"></p>
+                </div>
+
+                <div class="field" data-field-wrapper="age">
+                  <label for="age">Edad <span aria-hidden="true">*</span></label>
+                  <input id="age" name="age" type="number" min="13" max="80" placeholder="Ejemplo: 16" aria-describedby="help-age error-age" />
+                  <p class="field-help" id="help-age">La edad permitida está entre 13 y 80 años.</p>
+                  <p class="field-error" id="error-age" aria-live="polite"></p>
+                </div>
+
+                <div class="field" data-field-wrapper="phone">
+                  <label for="phone">Celular <span aria-hidden="true">*</span></label>
+                  <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="Ejemplo: 3001234567" aria-describedby="help-phone error-phone" />
+                  <p class="field-help" id="help-phone">Debe tener exactamente 10 dígitos y no debe contener letras.</p>
+                  <p class="field-error" id="error-phone" aria-live="polite"></p>
+                </div>
+
+                <div class="field" data-field-wrapper="email">
+                  <label for="email">Correo electrónico <span aria-hidden="true">*</span></label>
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="estudiante@correo.com" aria-describedby="help-email error-email" />
+                  <p class="field-help" id="help-email">Debe tener formato válido. Ejemplo: nombre@dominio.com.</p>
+                  <p class="field-error" id="error-email" aria-live="polite"></p>
+                </div>
+
+                <div class="field" data-field-wrapper="municipality">
+                  <label for="municipality">Municipio o vereda <span aria-hidden="true">*</span></label>
+                  <input id="municipality" name="municipality" type="text" list="municipalitySuggestions" placeholder="Ejemplo: El Progreso" aria-describedby="help-municipality error-municipality" />
+                  <datalist id="municipalitySuggestions"></datalist>
+                  <p class="field-help" id="help-municipality">Escribe mínimo 3 caracteres. Puedes usar una sugerencia.</p>
+                  <p class="field-error" id="error-municipality" aria-live="polite"></p>
+                </div>
+              </div>
+            </fieldset>
+
+            <!--
+              BLOQUE 8: Datos del taller.
+              Estos campos validan selección obligatoria y coherencia de agenda.
+            -->
+            <fieldset class="fieldset">
+              <legend>Datos del taller</legend>
+
+              <div class="form-grid">
+                <div class="field" data-field-wrapper="workshop">
+                  <label for="workshop">Taller de interés <span aria-hidden="true">*</span></label>
+                  <select id="workshop" name="workshop" aria-describedby="help-workshop error-workshop">
+                    <option value="">Selecciona un taller</option>
+                  </select>
+                  <p class="field-help" id="help-workshop">Selecciona el taller al que deseas inscribirte.</p>
+                  <p class="field-error" id="error-workshop" aria-live="polite"></p>
+                </div>
+
+                <div class="field" data-field-wrapper="modality">
+                  <label for="modality">Modalidad <span aria-hidden="true">*</span></label>
+                  <select id="modality" name="modality" aria-describedby="help-modality error-modality">
+                    <option value="">Selecciona una modalidad</option>
+                    <option value="presencial">Presencial</option>
+                    <option value="virtual">Virtual</option>
+                    <option value="mixta">Mixta</option>
+                  </select>
+                  <p class="field-help" id="help-modality">Elige cómo participarás en el taller.</p>
+                  <p class="field-error" id="error-modality" aria-live="polite"></p>
+                </div>
+
+                <div class="field" data-field-wrapper="schedule">
+                  <label for="schedule">Horario preferido <span aria-hidden="true">*</span></label>
+                  <select id="schedule" name="schedule" aria-describedby="help-schedule error-schedule">
+                    <option value="">Selecciona un horario</option>
+                  </select>
+                  <p class="field-help" id="help-schedule">Selecciona el horario que mejor se ajuste a tu disponibilidad.</p>
+                  <p class="field-error" id="error-schedule" aria-live="polite"></p>
+                </div>
+
+                <div class="field field--wide" data-field-wrapper="comments">
+                  <label for="comments">Observaciones</label>
+                  <textarea id="comments" name="comments" rows="4" maxlength="180" placeholder="Ejemplo: Necesito apoyo para conectarme virtualmente." aria-describedby="help-comments error-comments commentCounter"></textarea>
+                  <p class="field-help" id="help-comments">Campo opcional. Máximo 180 caracteres.</p>
+                  <p class="field-counter" id="commentCounter">0/180</p>
+                  <p class="field-error" id="error-comments" aria-live="polite"></p>
+                </div>
+              </div>
+            </fieldset>
+
+            <!--
+              BLOQUE 9: Consentimiento.
+              Este campo es importante porque confirma que el usuario acepta el uso académico
+              de la información registrada en la práctica.
+            -->
+            <div class="field field--checkbox" data-field-wrapper="terms">
+              <input id="terms" name="terms" type="checkbox" aria-describedby="error-terms" />
+              <label for="terms">Confirmo que la información será usada únicamente para esta actividad académica.</label>
+              <p class="field-error" id="error-terms" aria-live="polite"></p>
+            </div>
+
+            <!--
+              BLOQUE 10: Acciones del formulario.
+              Cada botón tiene una función concreta para probar, guardar o limpiar.
+            -->
+            <div class="form-actions">
+              <button class="button button--primary" type="submit">Validar y guardar</button>
+              <button class="button button--secondary" type="reset">Limpiar formulario</button>
+              <button class="button button--ghost" type="button" id="fillValidButton">Cargar ejemplo válido</button>
+              <button class="button button--warning" type="button" id="fillInvalidButton">Cargar ejemplo inválido</button>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <aside class="side-column" aria-label="Panel de apoyo">
+        <!--
+          BLOQUE 11: Resumen en vivo.
+          Permite revisar lo que se va escribiendo antes de guardar.
+        -->
+        <section class="panel panel--sticky" aria-labelledby="titulo-resumen">
+          <p class="section-kicker">Vista previa</p>
+          <h2 id="titulo-resumen">Resumen del registro</h2>
+          <dl id="liveSummary" class="summary-list"></dl>
+        </section>
+
+        <!--
+          BLOQUE 12: Checklist técnico.
+          Convierte la práctica en una lista verificable.
+        -->
+        <section class="panel" aria-labelledby="titulo-checklist">
+          <p class="section-kicker">Checklist</p>
+          <h2 id="titulo-checklist">Antes de entregar</h2>
+          <ul class="check-list check-list--compact">
+            <li>Probé campos vacíos.</li>
+            <li>Probé celular con menos de 10 dígitos.</li>
+            <li>Probé edad menor a 13.</li>
+            <li>Probé correo inválido.</li>
+            <li>Probé un registro duplicado.</li>
+            <li>Tomé capturas de evidencias.</li>
+          </ul>
+        </section>
+
+        <section id="zona-pruebas" class="panel" aria-labelledby="titulo-pruebas">
+          <p class="section-kicker">Depuración</p>
+          <h2 id="titulo-pruebas">Registro de pruebas</h2>
+          <div id="testLog" class="test-log" aria-live="polite">Todavía no has ejecutado una validación.</div>
+        </section>
+      </aside>
+    </section>
+
+    <!--
+      BLOQUE 13: Registros guardados.
+      Aquí se observa si la información se almacenó correctamente.
+    -->
+    <section class="section" aria-labelledby="titulo-registros">
+      <div class="panel">
+        <div class="panel__heading panel__heading--wrap">
+          <div>
+            <p class="section-kicker">Integridad de datos</p>
+            <h2 id="titulo-registros">Registros guardados en el navegador</h2>
+            <p>Estos datos se almacenan en `localStorage`. No salen del computador del estudiante.</p>
+          </div>
+
+          <div class="record-actions">
+            <label class="search-box" for="searchRecords">
+              <span>Filtrar</span>
+              <input id="searchRecords" type="search" placeholder="Nombre, taller, correo..." />
+            </label>
+            <button class="button button--secondary" type="button" id="exportJsonButton">Exportar JSON</button>
+            <button class="button button--secondary" type="button" id="exportCsvButton">Exportar CSV</button>
+            <button class="button button--danger" type="button" id="clearRecordsButton">Borrar registros</button>
+          </div>
+        </div>
+
+        <div id="statsGrid" class="stats-grid" aria-label="Estadísticas"></div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Documento</th>
+                <th>Edad</th>
+                <th>Celular</th>
+                <th>Taller</th>
+                <th>Modalidad</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="recordsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!--
+      BLOQUE 14: Retos de mejora.
+      Estos retos orientan las modificaciones obligatorias de la actividad.
+    -->
+    <section class="section section--challenges" aria-labelledby="titulo-retos">
+      <div class="section__header">
+        <p class="section-kicker">Tu intervención</p>
+        <h2 id="titulo-retos">Retos mínimos que debes resolver</h2>
+      </div>
+
+      <div class="challenge-grid">
+        <article class="challenge-card">
+          <h3>Reto 1: mejora una validación</h3>
+          <p>Modifica `js/validators.js` para hacer más estricta o más clara una regla existente.</p>
+        </article>
+        <article class="challenge-card">
+          <h3>Reto 2: mejora la UX</h3>
+          <p>Modifica `css/styles.css` para mejorar mensajes, contraste, botones o diseño móvil.</p>
+        </article>
+        <article class="challenge-card">
+          <h3>Reto 3: documenta pruebas</h3>
+          <p>Completa `evidencias/MATRIZ_PRUEBAS.md` con datos válidos, inválidos y resultado observado.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Proyecto académico · Validación de formularios, integridad de datos y UX · Semana 13</p>
+  </footer>
+
+  <!--
+    BLOQUE 15: Conexión de JavaScript.
+    Se cargan en orden porque cada archivo depende del anterior.
+    No se usan módulos para que el proyecto funcione incluso abriendo index.html directamente.
+  -->
+  <script src="js/data.js" defer></script>
+  <script src="js/validators.js" defer></script>
+  <script src="js/storage.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{
+  "actividad": "Semana 13 - Taller practico de formularios UX",
+  "casos": [
+    {
+      "id": "P01",
+      "descripcion": "Formulario vacio",
+      "datos": {},
+      "esperado": "Mostrar errores en campos obligatorios"
+    },
+    {
+      "id": "P02",
+      "descripcion": "Nombre con numeros",
+      "datos": {
+        "fullName": "Ana 123"
+      },
+      "esperado": "Rechazar nombre"
+    },
+    {
+      "id": "P03",
+      "descripcion": "Documento con letras",
+      "datos": {
+        "documentId": "12A"
+      },
+      "esperado": "Rechazar documento"
+    },
+    {
+      "id": "P04",
+      "descripcion": "Edad menor a la permitida",
+      "datos": {
+        "age": 10
+      },
+      "esperado": "Rechazar edad"
+    },
+    {
+      "id": "P05",
+      "descripcion": "Celular con letras",
+      "datos": {
+        "phone": "300abc"
+      },
+      "esperado": "Rechazar celular"
+    },
+    {
+      "id": "P06",
+      "descripcion": "Correo sin arroba",
+      "datos": {
+        "email": "correo.com"
+      },
+      "esperado": "Rechazar correo"
+    },
+    {
+      "id": "P07",
+      "descripcion": "Registro valido",
+      "datos": "Usar boton cargar ejemplo valido",
+      "esperado": "Guardar registro"
+    },
+    {
+      "id": "P08",
+      "descripcion": "Registro duplicado",
+      "datos": "Enviar dos veces el mismo registro",
+      "esperado": "Rechazar duplicado"
+    }
+  ]
+}

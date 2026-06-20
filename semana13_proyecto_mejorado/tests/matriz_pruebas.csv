@@ -1,0 +1,9 @@
+ID,Caso de prueba,Datos usados,Resultado esperado,Resultado obtenido,Paso,Evidencia
+P01,Formulario vacío,Sin datos,Mostrar errores en campos obligatorios,,,
+P02,Nombre inválido,Ana 123,Rechazar números en el nombre,,,
+P03,Documento inválido,12A,Rechazar letras,,,
+P04,Edad inválida,10,Rechazar edad menor a 13,,,
+P05,Celular inválido,300abc,Rechazar letras,,,
+P06,Correo inválido,correo.com,Rechazar formato inválido,,,
+P07,Registro válido,Datos completos,Guardar en tabla,,,
+P08,Registro duplicado,Mismo documento,Rechazar duplicado,,,
